@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "render.hpp"
+#include "game_events.hpp"
 
 int main(int argc, char* argv[]) {
     //SDL initialization
@@ -17,13 +18,12 @@ int main(int argc, char* argv[]) {
     
 //--------------------------------------------------------------------------------------------------------
     //Window & entities initialization 
-    renderWindow window("Hello!", 800, 800);
+    renderWindow window("Hello!", SCREEN_WIDTH, SCREEN_HEIGHT);
 
     const int frameRate = 30;
     int frameDelay = 1000 / frameRate;
 //--------------------------------------------------------------------------------------------------------
     //Main game loop
-    SDL_Event gameEvent;
     bool gameRunning = true;
     bool gamePausing = false;
     while (gameRunning) {
@@ -55,6 +55,7 @@ int main(int argc, char* argv[]) {
             }
         }
         
+        window.renderBackground(window.loadTexture("res/bg.png"));
         window.display();
 
         std::cout << SDL_GetTicks() << std::endl;

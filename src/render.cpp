@@ -11,7 +11,7 @@ renderWindow::renderWindow(const char* p_title, int p_w, int p_h)
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_RenderSetLogicalSize(renderer, 800, 800);
+    //SDL_RenderSetLogicalSize(renderer, 800, 800);
 }
 
 SDL_Texture* renderWindow::loadTexture(const char* p_filePath) {
@@ -22,7 +22,19 @@ SDL_Texture* renderWindow::loadTexture(const char* p_filePath) {
     return texture;
 }
 
-
+void renderWindow::renderBackground(SDL_Texture* p_tex) {
+    SDL_Rect src;
+    src.x = 0;
+    src.y = 0;
+    src.w = SCREEN_WIDTH;
+    src.h = SCREEN_HEIGHT;
+    SDL_Rect des;
+    des.x = 0;
+    des.y = 0;
+    des.w = SCREEN_WIDTH;
+    des.h = SCREEN_HEIGHT;
+    SDL_RenderCopy(renderer, p_tex, &src, &des);
+};
 
 SDL_Renderer* renderWindow::getRenderer() {
     return renderer;
