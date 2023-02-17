@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
 //-------------------------------------------------------------------------------------------------
     const int frameRate = 30;
     int frameDelay = 1000 / frameRate;
+
     //Main game loop
     while (gameRunning) {
 
@@ -26,7 +27,6 @@ int main(int argc, char* argv[]) {
         ProcessGameEvent();
 
         window.clear();
-        
         window.renderBackground(bg);
         window.renderPlayer(Bob);
         window.display();

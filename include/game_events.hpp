@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "render.hpp" 
 #include "maths.hpp"
 #include "entity.hpp"
 
@@ -30,6 +31,10 @@ void ProcessGameEvent() {
             case SDL_QUIT:
                 QuitGame();
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                RegisterMousePos();
+                PlayerVelocity = velocityAB(Bob.getPos(), MousePos, PlayerSpeed);
+                break;
             case SDL_KEYDOWN: 
                 switch (gameEvent.key.keysym.sym) {
                     case SDLK_ESCAPE:
@@ -37,15 +42,11 @@ void ProcessGameEvent() {
                         break;
                     default:
                         break;
+                SDL_ResetKeyboard();
                 }
-            case SDL_MOUSEBUTTONDOWN:
-                RegisterMousePos();
-                PlayerVelocity = velocityAB(Bob.getPos(), MousePos, PlayerSpeed);
-                break;
             default:
                 break;
         }
-        SDL_ResetKeyboard();
     }
     Bob.move(PlayerVelocity);
 }
@@ -66,6 +67,6 @@ void QuitGame() {
 }
 
 void RegisterMousePos() {
-    MousePos.x = gameEvent.button.x;
-    MousePos.y = gameEvent.button.y;
+    MousePos.x = gameEvent.button.x - PLAYER_SIZE / 2;
+    MousePos.y = gameEvent.button.y - PLAYER_SIZE / 2;
 }

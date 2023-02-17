@@ -8,10 +8,6 @@
 #include "maths.hpp"
 #include "entity.hpp"
 
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-const int PLAYER_SIZE = 40;
-
 class renderWindow {
 public:
     renderWindow(const char* p_title, int p_w, int p_h);
