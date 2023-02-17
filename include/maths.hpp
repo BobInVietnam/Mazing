@@ -1,4 +1,6 @@
+#pragma once
 #include <SDL2/SDL.h>
+#include <iostream>
 
 struct Vector2f
 {
@@ -8,4 +10,9 @@ struct Vector2f
     Vector2f(float p_x, float p_y)
     : x(p_x), y(p_y)
     {};
+
+    void print();
+    bool operator == (Vector2f);
 };
+
+Vector2f velocityAB(Vector2f p_A, Vector2f p_B, int p_speed);
