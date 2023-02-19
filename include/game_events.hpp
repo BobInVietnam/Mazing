@@ -7,13 +7,12 @@
 
 SDL_Event gameEvent;
 
-
 //Window & entities initialization 
 renderWindow window("Hello!", SCREEN_WIDTH, SCREEN_HEIGHT);
 SDL_Texture* bg = window.loadTexture("res/bg.png");
 
 //Player-related variables
-Player Bob(window.loadTexture("res/thing.png"), Vector2f(400, 300), Vector2f(40, 40));
+Entity Bob(window.loadTexture("res/thing.png"), Vector2f(400, 300), Vector2f(40, 40));
 Vector2f MousePos;
 Vector2f PlayerVelocity;
 int PlayerSpeed = 20;
@@ -67,6 +66,6 @@ void QuitGame() {
 }
 
 void RegisterMousePos() {
-    MousePos.x = gameEvent.button.x - PLAYER_SIZE / 2;
-    MousePos.y = gameEvent.button.y - PLAYER_SIZE / 2;
+    MousePos.x = gameEvent.button.x;
+    MousePos.y = gameEvent.button.y;
 }

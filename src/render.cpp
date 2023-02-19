@@ -35,18 +35,18 @@ void renderWindow::renderBackground(SDL_Texture* p_tex) {
     des.h = SCREEN_HEIGHT;
     SDL_RenderCopy(renderer, p_tex, &src, &des);
 }
-void renderWindow::renderPlayer(Player p_player) {
+void renderWindow::renderEntity(Entity p_entity) {
     SDL_Rect src;
     src.x = 0;
     src.y = 0;
-    src.w = p_player.getSize().x;
-    src.h = p_player.getSize().y;
+    src.w = p_entity.getSize().x;
+    src.h = p_entity.getSize().y;
     SDL_Rect des;
-    des.x = p_player.getPos().x;
-    des.y = p_player.getPos().y;
+    des.x = p_entity.getPos().x - p_entity.getSize().x/2;
+    des.y = p_entity.getPos().y - p_entity.getSize().y/2;
     des.w = src.w;
     des.h = src.h;
-    SDL_RenderCopy(renderer, p_player.getTex(), &src, &des);
+    SDL_RenderCopy(renderer, p_entity.getTex(), &src, &des);
 }
 
 SDL_Renderer* renderWindow::getRenderer() {

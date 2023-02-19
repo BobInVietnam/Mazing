@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
         window.clear();
         window.renderBackground(bg);
-        window.renderPlayer(Bob);
+        window.renderEntity(Bob);
         window.display();
 
         std::cout << SDL_GetTicks() << std::endl;

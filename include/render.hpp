@@ -13,7 +13,7 @@ public:
     renderWindow(const char* p_title, int p_w, int p_h);
     SDL_Texture* loadTexture(const char* p_filePath);
     void renderBackground(SDL_Texture* p_tex);
-    void renderPlayer(Player p_player);
+    void renderEntity(Entity p_entity);
     SDL_Renderer* getRenderer();
     void display();
     void cleanUp();
