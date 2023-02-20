@@ -25,9 +25,11 @@ int main(int argc, char* argv[]) {
         int startTick = SDL_GetTicks();
         
         ProcessGameEvent();
+        CollisionCheck();
 
         window.clear();
         window.renderBackground(bg);
+        for (Obstacle i : ObsList) window.renderEntity(i);
         window.renderEntity(Bob);
         window.display();
 

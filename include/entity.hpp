@@ -16,9 +16,17 @@ public:
     Vector2f getPos() { return position; }
     SDL_Texture* getTex() { return texture; }
 };
-
+class Obstacle : public Entity 
+{
+public:
+    Obstacle(SDL_Texture* p_tex, Vector2f p_pos, Vector2f p_size) : Entity(p_tex, p_pos, p_size) 
+    {};
+};
 class Player : public Entity
 {
-protected: 
-    
+public:
+    Player(SDL_Texture* p_tex, Vector2f p_pos, Vector2f p_size) : Entity(p_tex, p_pos, p_size) 
+    {};
+    void changeTex(SDL_Texture* p_tex);
+    bool Collided(Obstacle p_obs);
 };
