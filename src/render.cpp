@@ -62,4 +62,3 @@ void renderWindow::cleanUp() {
 void renderWindow::clear() {
     SDL_RenderClear(renderer);
 }
-

@@ -15,10 +15,10 @@ void Player::changeTex(SDL_Texture* p_tex)
     texture = p_tex;
 }
 
-bool Player::Collided(Obstacle p_obs) {
-    if (position.x < p_obs.getPos().x + p_obs.getSize().x
-    &&  position.x + size.x > p_obs.getPos().x
-    &&  position.y < p_obs.getPos().y + p_obs.getSize().y
-    &&  position.y + size.y > p_obs.getPos().y) return true;
+bool Player::Collided(Entity p_entity) {
+    if (position.x < p_entity.getPos().x + p_entity.getSize().x
+    &&  position.x + size.x > p_entity.getPos().x
+    &&  position.y < p_entity.getPos().y + p_entity.getSize().y
+    &&  position.y + size.y > p_entity.getPos().y) return true;
     else return false;
 }

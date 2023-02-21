@@ -6,6 +6,10 @@
 #include "render.hpp"
 #include "game_events.hpp"
 
+void AdjustFrameTime(int p_tick);
+const int frameRate = 30;
+int frameDelay = 1000 / frameRate;
+
 int main(int argc, char* argv[]) {
     //SDL initialization
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -16,9 +20,6 @@ int main(int argc, char* argv[]) {
     }
     std::cout << "End of warning..." << std::endl;
 //-------------------------------------------------------------------------------------------------
-    const int frameRate = 30;
-    int frameDelay = 1000 / frameRate;
-
     //Main game loop
     while (gameRunning) {
 
@@ -30,6 +31,7 @@ int main(int argc, char* argv[]) {
         window.clear();
         window.renderBackground(bg);
         for (Obstacle i : ObsList) window.renderEntity(i);
+        window.renderEntity(Goal);
         window.renderEntity(Bob);
         window.display();
 
@@ -37,8 +39,7 @@ int main(int argc, char* argv[]) {
         std::cout << "MousePos: "; MousePos.print();
         std::cout << "Bob's Velocity: "; PlayerVelocity.print(); std::cout << std::endl;
 
-        int frameTick = SDL_GetTicks() - startTick;
-        if (frameDelay > frameTick) SDL_Delay(frameDelay - frameTick);
+        AdjustFrameTime(startTick);
     }
 //-------------------------------------------------------------------------------------------------
 
@@ -47,3 +48,8 @@ int main(int argc, char* argv[]) {
     
     return EXIT_SUCCESS;
 }  
+
+void AdjustFrameTime(int p_tick) {
+    int frameTick = SDL_GetTicks() - p_tick;
+    if (frameDelay > frameTick) SDL_Delay(frameDelay - frameTick);
+}

@@ -28,5 +28,5 @@ public:
     Player(SDL_Texture* p_tex, Vector2f p_pos, Vector2f p_size) : Entity(p_tex, p_pos, p_size) 
     {};
     void changeTex(SDL_Texture* p_tex);
-    bool Collided(Obstacle p_obs);
+    bool Collided(Entity p_entity);
 };

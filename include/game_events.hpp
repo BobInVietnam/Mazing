@@ -1,10 +1,12 @@
 #pragma once
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <vector>
+
 #include "render.hpp" 
-#include "maths.hpp"
 #include "entity.hpp"
+#include "maths.hpp"
 
 SDL_Event gameEvent;
 
@@ -12,11 +14,11 @@ SDL_Event gameEvent;
 renderWindow window("Hello!", SCREEN_WIDTH, SCREEN_HEIGHT);
 SDL_Texture* bg = window.loadTexture("res/bg.png");
 
-
 //Player-related variables
 std::vector<Obstacle> ObsList = {   Obstacle(window.loadTexture("res/blockade.png"), Vector2f(100, 100), Vector2f(400, 80))
                                 ,   Obstacle(window.loadTexture("res/blockade.png"), Vector2f(700, 100), Vector2f(80, 200))};
 Player Bob(window.loadTexture("res/thing.png"), Vector2f(400, 300), Vector2f(40, 40));
+Entity Goal(window.loadTexture("res/goal.png"), Vector2f(400, 500), Vector2f(30, 30));
 Vector2f MousePos;
 Vector2f PlayerVelocity;
 int PlayerSpeed = 10;
@@ -27,7 +29,12 @@ bool gamePausing = false;
 void PauseGame();
 void QuitGame();
 void RegisterMousePos();
+void ProcessGameEvent();
 
+bool AlreadyCollided = false;
+void CollisionCheck();
+
+//-------------------------------------------------------------------------------------------------
 void ProcessGameEvent() {
     while (SDL_PollEvent(&gameEvent)) {
         switch (gameEvent.type) {
@@ -54,7 +61,7 @@ void ProcessGameEvent() {
     Bob.move(PlayerVelocity);
 }
 
-bool AlreadyCollided = false;
+
 void CollisionCheck() {
     bool Collided = false;
     for (Obstacle i : ObsList) {
@@ -71,6 +78,9 @@ void CollisionCheck() {
         AlreadyCollided = false;
         Bob.changeTex(window.loadTexture("res/thing.png"));
     }
+
+    if (Bob.getPos().x + PLAYER_SIZE > SCREEN_WIDTH || Bob.getPos().x < 0
+    ||  Bob.getPos().y + PLAYER_SIZE > SCREEN_HEIGHT || Bob.getPos().y < 0) PlayerVelocity = Vector2f(0.0f, 0.0f);
 }
 
 void PauseGame() {
