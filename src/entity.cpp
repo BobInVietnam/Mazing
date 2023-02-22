@@ -11,7 +11,7 @@ void Entity::move(Vector2f p_velocity) {
 
 void Player::changeTex(SDL_Texture* p_tex) 
 {
-    texture = NULL;
+    SDL_DestroyTexture(texture);
     texture = p_tex;
 }
 

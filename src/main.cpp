@@ -44,6 +44,8 @@ int main(int argc, char* argv[]) {
 
     window.cleanUp();
     SDL_Quit();
+    IMG_Quit();
+    TTF_Quit();
     
     return EXIT_SUCCESS;
 }  

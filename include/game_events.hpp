@@ -72,13 +72,21 @@ void PauseGame() {
     while (gamePausing) {
         SDL_Delay(50);
         SDL_PollEvent(&gameEvent);
-        if (gameEvent.type == SDL_KEYDOWN) {
-            if (gameEvent.key.keysym.sym == SDLK_ESCAPE) gamePausing = false;
+        switch (gameEvent.type) {
+            case SDL_QUIT:
+                QuitGame();
+                break;
+            case SDL_KEYDOWN:
+                if (gameEvent.key.keysym.sym == SDLK_ESCAPE) gamePausing = false;
+                break;
+            default:
+                break;
         }
     }
 }
 
 void QuitGame() {
+    gamePausing = false;
     gameRunning = false;
 }
 
