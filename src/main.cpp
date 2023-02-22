@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 
-#include "render.hpp"
 #include "game_events.hpp"
 
 void AdjustFrameTime(int p_tick);
