@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <vector>
 
@@ -22,17 +23,20 @@ int main(int argc, char* argv[]) {
     //Main game loop
     while (gameRunning) {
 
+        if (gameWon) {
+            Bob.setPos(lv[ID].StartingPos);
+            Bob.setSize(lv[ID].StartingSize);
+            Goal.setPos(lv[ID].GoalPos);
+            PlayerVelocity = Vector2f();
+            gameWon = false;
+        }
+
         int startTick = SDL_GetTicks();
         
         ProcessGameEvent();
         CollisionCheck();
-
-        window.clear();
-        window.renderBackground(bg);
-        for (Obstacle i : ObsList) window.renderEntity(i);
-        window.renderEntity(Goal);
-        window.renderEntity(Bob);
-        window.display();
+        RenderMainGame();
+        GameWon();
 
         std::cout << SDL_GetTicks() << std::endl;
         std::cout << "MousePos: "; MousePos.print();

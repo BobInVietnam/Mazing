@@ -2,9 +2,8 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-const int PLAYER_SIZE = 40;
+const int SCREEN_WIDTH = 1000;
+const int SCREEN_HEIGHT = 800;
 
 struct Vector2f
 {

@@ -14,10 +14,13 @@ void PauseGame();
 void QuitGame();
 void RegisterMousePos();
 void ProcessGameEvent();
+void RenderMainGame();
 
 bool AlreadyCollided = false;
 void CollisionCheck();
 
+bool gameWon = true;
+void GameWon();
 //-------------------------------------------------------------------------------------------------
 void ProcessGameEvent() {
     while (SDL_PollEvent(&gameEvent)) {
@@ -27,7 +30,7 @@ void ProcessGameEvent() {
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 RegisterMousePos();
-                PlayerVelocity = velocityAB(Bob.getPos(), MousePos, PlayerSpeed);
+                PlayerVelocity = velocityAB(Bob.getPos(), MousePos, lv[ID].PlayerLevelSpeed);
                 break;
             case SDL_KEYDOWN: 
                 switch (gameEvent.key.keysym.sym) {
@@ -48,7 +51,7 @@ void ProcessGameEvent() {
 
 void CollisionCheck() {
     bool Collided = false;
-    for (Obstacle i : ObsList) {
+    for (Obstacle i : lv[ID].ObstacleList) {
         if (Bob.Collided(i)) {
             Collided = true;
             break;
@@ -63,8 +66,24 @@ void CollisionCheck() {
         Bob.changeTex(window.loadTexture("res/thing.png"));
     }
 
-    if (Bob.getPos().x + PLAYER_SIZE > SCREEN_WIDTH || Bob.getPos().x < 0
-    ||  Bob.getPos().y + PLAYER_SIZE > SCREEN_HEIGHT || Bob.getPos().y < 0) PlayerVelocity = Vector2f(0.0f, 0.0f);
+    if (Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
+    ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) PlayerVelocity = Vector2f(0.0f, 0.0f);
+}
+
+void RenderMainGame() {
+    window.clear();
+    window.renderBackground(bg);
+    for (Obstacle i : lv[ID].ObstacleList) window.renderEntity(i);
+    window.renderEntity(Goal);
+    window.renderEntity(Bob);
+    window.display();
+}
+
+void GameWon() {
+    if (Bob.Collided(Goal)) {
+        gameWon = true;
+        ++ID;
+    }
 }
 
 void PauseGame() {
