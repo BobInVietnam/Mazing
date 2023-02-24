@@ -7,10 +7,11 @@
 //Window & entities initialization 
 renderWindow window("Hello!", SCREEN_WIDTH, SCREEN_HEIGHT);
 SDL_Texture* bg = window.loadTexture("res/bg.png");
+SDL_Texture* menu = window.loadTexture("res/intro.png");
 
 //Player-related variables
 Player Bob(window.loadTexture("res/thing.png"));
-Entity Goal(window.loadTexture("res/goal.png"), Vector2f(400, 500), Vector2f(40, 40));
+Entity Goal(window.loadTexture("res/goal.png"), Vector2f(), Vector2f(40, 40));
 Vector2f MousePos;
 Vector2f PlayerVelocity;
 

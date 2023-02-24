@@ -19,30 +19,40 @@ int main(int argc, char* argv[]) {
         std::cout << "IMG_Init HAS FAILED. ERROR: " << SDL_GetError() << std::endl;
     }
     std::cout << "End of warning..." << std::endl;
+    int startTick = 0;
 //-------------------------------------------------------------------------------------------------
     //Main game loop
     while (gameRunning) {
 
-        if (gameWon) {
-            Bob.setPos(lv[ID].StartingPos);
-            Bob.setSize(lv[ID].StartingSize);
-            Goal.setPos(lv[ID].GoalPos);
-            PlayerVelocity = Vector2f();
-            gameWon = false;
+        while (gameMenuRunning) {
+            startTick = SDL_GetTicks();
+            ProcessMenuEvent();
+            RenderMenu();
+            AdjustFrameTime(startTick);
         }
 
-        int startTick = SDL_GetTicks();
-        
-        ProcessGameEvent();
-        CollisionCheck();
-        RenderMainGame();
-        GameWon();
+        InitiateLevel();
 
-        std::cout << SDL_GetTicks() << std::endl;
-        std::cout << "MousePos: "; MousePos.print();
-        std::cout << "Bob's Velocity: "; PlayerVelocity.print(); std::cout << std::endl;
+        while (gameplayRunning) {
+            startTick = SDL_GetTicks();
+            
+            ProcessGameEvent();
+            CollisionCheck();
+            CheckGameWon();
 
-        AdjustFrameTime(startTick);
+            if (gameWon) {
+                InitiateLevel();
+            }
+            RenderMainGame();
+            
+            //debugger
+            std::cout << SDL_GetTicks() << std::endl;
+            std::cout << "MousePos: "; MousePos.print();
+            std::cout << "Bob's Velocity: "; PlayerVelocity.print(); std::cout << std::endl;
+
+            AdjustFrameTime(startTick);
+            if (ID > LEVEL_NUM) QuitGame();
+        }
     }
 //-------------------------------------------------------------------------------------------------
 

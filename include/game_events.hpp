@@ -8,20 +8,54 @@
 SDL_Event gameEvent;
 
 bool gameRunning = true;
-bool gamePausing = false;
+
+bool gameMenuRunning = true;
+bool gameplayRunning = true;
+bool gameplayPausing = false;
+
+void RenderMenu();
+void ProcessMenuEvent();
 
 void PauseGame();
 void QuitGame();
 void RegisterMousePos();
 void ProcessGameEvent();
 void RenderMainGame();
-
 bool AlreadyCollided = false;
 void CollisionCheck();
+bool gameWon = false;
+void CheckGameWon();
+void InitiateLevel();
 
-bool gameWon = true;
-void GameWon();
 //-------------------------------------------------------------------------------------------------
+void ProcessMenuEvent() {
+    while (SDL_PollEvent(&gameEvent)) {
+        switch (gameEvent.type) {
+            case SDL_QUIT:
+                QuitGame();
+                break;
+            case SDL_KEYDOWN: 
+                switch (gameEvent.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        PauseGame();
+                        break;
+                    case SDLK_RETURN:
+                        gameMenuRunning = false;
+                        break;
+                    default:
+                        break;
+                SDL_ResetKeyboard();
+                }
+            default:
+                break;
+        }
+    }
+}
+void RenderMenu() {
+    window.clear();
+    window.renderBackground(menu);
+    window.display();
+}
 void ProcessGameEvent() {
     while (SDL_PollEvent(&gameEvent)) {
         switch (gameEvent.type) {
@@ -67,7 +101,9 @@ void CollisionCheck() {
     }
 
     if (Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
-    ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) PlayerVelocity = Vector2f(0.0f, 0.0f);
+    ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) {
+        PlayerVelocity = Vector2f();
+    }
 }
 
 void RenderMainGame() {
@@ -79,7 +115,7 @@ void RenderMainGame() {
     window.display();
 }
 
-void GameWon() {
+void CheckGameWon() {
     if (Bob.Collided(Goal)) {
         gameWon = true;
         ++ID;
@@ -87,8 +123,8 @@ void GameWon() {
 }
 
 void PauseGame() {
-    gamePausing = true;
-    while (gamePausing) {
+    gameplayPausing = true;
+    while (gameplayPausing) {
         SDL_Delay(50);
         SDL_PollEvent(&gameEvent);
         switch (gameEvent.type) {
@@ -96,7 +132,7 @@ void PauseGame() {
                 QuitGame();
                 break;
             case SDL_KEYDOWN:
-                if (gameEvent.key.keysym.sym == SDLK_ESCAPE) gamePausing = false;
+                if (gameEvent.key.keysym.sym == SDLK_ESCAPE) gameplayPausing = false;
                 break;
             default:
                 break;
@@ -105,11 +141,21 @@ void PauseGame() {
 }
 
 void QuitGame() {
-    gamePausing = false;
+    gameMenuRunning = false;
+    gameplayPausing = false;
+    gameplayRunning = false;
     gameRunning = false;
 }
 
 void RegisterMousePos() {
     MousePos.x = gameEvent.button.x - Bob.getSize().x/2;
     MousePos.y = gameEvent.button.y - Bob.getSize().y/2;
+}
+
+void InitiateLevel() {
+    Bob.setPos(lv[ID].StartingPos);
+    Bob.setSize(lv[ID].StartingSize);
+    Goal.setPos(lv[ID].GoalPos);
+    PlayerVelocity = Vector2f();
+    gameWon = false;
 }
