@@ -1,10 +1,10 @@
 #include "entity.hpp"
 
-Entity::Entity(SDL_Texture* p_tex, Vector2f p_pos, Vector2f p_size)
+Entity::Entity(Texture p_tex, Vector2f p_pos, Vector2f p_size)
 :texture(p_tex), position(p_pos), size(p_size)
 {}
 
-Entity::Entity(SDL_Texture* p_tex)
+Entity::Entity(Texture p_tex)
 :texture(p_tex)
 {
     position = Vector2f(0,0);
@@ -16,9 +16,8 @@ void Entity::move(Vector2f p_velocity) {
     position.y += p_velocity.y;
 }
 
-void Player::changeTex(SDL_Texture* p_tex) 
+void Player::changeTex(Texture p_tex) 
 {
-    SDL_DestroyTexture(texture);
     texture = p_tex;
 }
 

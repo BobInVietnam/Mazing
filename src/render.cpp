@@ -39,14 +39,14 @@ void renderWindow::renderEntity(Entity p_entity) {
     SDL_Rect src;
     src.x = 0;
     src.y = 0;
-    src.w = p_entity.getSize().x;
-    src.h = p_entity.getSize().y;
+    src.w = p_entity.getTex().size.x;
+    src.h = p_entity.getTex().size.y;
     SDL_Rect des;
     des.x = p_entity.getPos().x;
     des.y = p_entity.getPos().y;
     des.w = p_entity.getSize().x;
     des.h = p_entity.getSize().y;
-    SDL_RenderCopy(renderer, p_entity.getTex(), &src, &des);
+    SDL_RenderCopy(renderer, p_entity.getTex().texture, &src, &des);
 }
 
 SDL_Renderer* renderWindow::getRenderer() {

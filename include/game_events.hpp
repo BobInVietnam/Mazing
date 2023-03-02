@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "levels.hpp" 
+#include "data.hpp" 
 
 SDL_Event gameEvent;
 
@@ -93,11 +93,11 @@ void CollisionCheck() {
     }
     if (Collided && !AlreadyCollided) {
         AlreadyCollided = true;
-        Bob.changeTex(window.loadTexture("res/thing_oof.png"));
+        Bob.changeTex(player_hit);
     }
     if (!Collided && AlreadyCollided) {
         AlreadyCollided = false;
-        Bob.changeTex(window.loadTexture("res/thing.png"));
+        Bob.changeTex(player);
     }
 
     if (Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
@@ -158,4 +158,5 @@ void InitiateLevel() {
     Goal.setPos(lv[ID].GoalPos);
     PlayerVelocity = Vector2f();
     gameWon = false;
+    
 }
