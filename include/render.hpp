@@ -13,6 +13,7 @@ public:
     SDL_Texture* loadTexture(const char* p_filePath);
     void renderBackground(SDL_Texture* p_tex);
     void renderEntity(Entity p_entity);
+    void renderText(const char* p_string);
     SDL_Renderer* getRenderer();
     void display();
     void cleanUp();

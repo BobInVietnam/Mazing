@@ -10,12 +10,11 @@ SDL_Event gameEvent;
 bool gameRunning = true;
 
 bool gameMenuRunning = true;
-bool gameplayRunning = true;
-bool gameplayPausing = false;
-
 void RenderMenu();
 void ProcessMenuEvent();
 
+bool gameplayRunning = false;
+bool gameplayPausing = false;
 void PauseGame();
 void QuitGame();
 void RegisterMousePos();
@@ -23,9 +22,16 @@ void ProcessGameEvent();
 void RenderMainGame();
 bool AlreadyCollided = false;
 void CollisionCheck();
-bool gameWon = false;
 void CheckGameWon();
 void InitiateLevel();
+
+bool gameLostRunning = false;
+void RenderGameLostMenu();
+void ProcessGLMenuEvent();
+
+bool gameWinRunning = false;
+void RenderGameWonMenu();
+void ProcessGWMenuEvent();
 
 //-------------------------------------------------------------------------------------------------
 void ProcessMenuEvent() {
@@ -37,10 +43,11 @@ void ProcessMenuEvent() {
             case SDL_KEYDOWN: 
                 switch (gameEvent.key.keysym.sym) {
                     case SDLK_ESCAPE:
-                        PauseGame();
+                        QuitGame();
                         break;
                     case SDLK_RETURN:
                         gameMenuRunning = false;
+                        gameplayRunning = true;
                         break;
                     default:
                         break;
@@ -91,18 +98,24 @@ void CollisionCheck() {
             break;
         }
     }
-    if (Collided && !AlreadyCollided) {
-        AlreadyCollided = true;
-        Bob.changeTex(player_hit);
-    }
-    if (!Collided && AlreadyCollided) {
-        AlreadyCollided = false;
-        Bob.changeTex(player);
+    // if (Collided && !AlreadyCollided) {
+    //     AlreadyCollided = true;
+    //     Bob.changeTex(player_hit);
+    // }
+    // if (!Collided && AlreadyCollided) {
+    //     AlreadyCollided = false;
+    //     Bob.changeTex(player);
+    // }
+
+    if (Collided) {
+        gameLostRunning = true;
+        gameplayRunning = false;
     }
 
     if (Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
     ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) {
-        PlayerVelocity = Vector2f();
+        gameLostRunning = true;
+        gameplayRunning = false;
     }
 }
 
@@ -117,7 +130,8 @@ void RenderMainGame() {
 
 void CheckGameWon() {
     if (Bob.Collided(Goal)) {
-        gameWon = true;
+        gameplayRunning = false;
+        gameWinRunning = true;
         ++ID;
     }
 }
@@ -144,6 +158,8 @@ void QuitGame() {
     gameMenuRunning = false;
     gameplayPausing = false;
     gameplayRunning = false;
+    gameLostRunning = false;
+    gameWinRunning = false;
     gameRunning = false;
 }
 
@@ -157,6 +173,76 @@ void InitiateLevel() {
     Bob.setSize(lv[ID].StartingSize);
     Goal.setPos(lv[ID].GoalPos);
     PlayerVelocity = Vector2f();
-    gameWon = false;
-    
+}
+
+void RenderGameLostMenu() {
+    window.clear();
+    window.renderBackground(lost);
+    window.display();
+}
+
+void ProcessGLMenuEvent() {
+    while (SDL_PollEvent(&gameEvent)) {
+        switch (gameEvent.type) {
+            case SDL_QUIT:
+                QuitGame();
+                break;
+            case SDL_KEYDOWN: 
+                switch (gameEvent.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        QuitGame();
+                        break;
+                    case SDLK_m:
+                        gameLostRunning = false;
+                        gameMenuRunning = true;
+                        ID = 0;
+                        break;
+                    case SDLK_r:
+                        gameLostRunning = false;
+                        gameplayRunning = true;
+                        break;   
+                    default:
+                        break;
+                SDL_ResetKeyboard();
+                }
+            default:
+                break;
+        }
+    }
+}
+
+void RenderGameWonMenu() {
+    window.clear();
+    window.renderBackground(win);
+    window.display();
+}
+
+void ProcessGWMenuEvent() {
+    while (SDL_PollEvent(&gameEvent)) {
+        switch (gameEvent.type) {
+            case SDL_QUIT:
+                QuitGame();
+                break;
+            case SDL_KEYDOWN: 
+                switch (gameEvent.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        QuitGame();
+                        break;
+                    case SDLK_c:
+                        gameWinRunning = false;
+                        gameplayRunning = true;
+                        break;
+                    case SDLK_r:
+                        gameWinRunning = false;
+                        gameplayRunning = true;
+                        --ID;
+                        break;   
+                    default:
+                        break;
+                SDL_ResetKeyboard();
+                }
+            default:
+                break;
+        }
+    }
 }

@@ -48,6 +48,9 @@ void renderWindow::renderEntity(Entity p_entity) {
     des.h = p_entity.getSize().y;
     SDL_RenderCopy(renderer, p_entity.getTex().texture, &src, &des);
 }
+void renderWindow::renderText(const char* p_string) {
+    
+}
 
 SDL_Renderer* renderWindow::getRenderer() {
     return renderer;

@@ -35,15 +35,10 @@ int main(int argc, char* argv[]) {
 
         while (gameplayRunning) {
             startTick = SDL_GetTicks();
-            
             ProcessGameEvent();
             CollisionCheck();
-            CheckGameWon();
-
-            if (gameWon) {
-                InitiateLevel();
-            }
             RenderMainGame();
+            CheckGameWon();
             
             //debugger
             std::cout << SDL_GetTicks() << std::endl;
@@ -51,8 +46,23 @@ int main(int argc, char* argv[]) {
             std::cout << "Bob's Velocity: "; PlayerVelocity.print(); std::cout << std::endl;
 
             AdjustFrameTime(startTick);
-            if (ID > LEVEL_NUM) QuitGame();
         }
+
+        while (gameLostRunning) {
+            startTick = SDL_GetTicks();
+            RenderGameLostMenu();
+            ProcessGLMenuEvent();
+            AdjustFrameTime(startTick);
+        }
+
+        while (gameWinRunning) {
+            startTick = SDL_GetTicks();
+            RenderGameWonMenu();
+            ProcessGWMenuEvent();
+            AdjustFrameTime(startTick);
+        }
+
+        if (ID > LEVEL_NUM) QuitGame();
     }
 //-------------------------------------------------------------------------------------------------
 
