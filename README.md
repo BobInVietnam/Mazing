@@ -7,4 +7,4 @@ Hãy né những khối đỏ và về đích trong thời gian ngắn nhất.
 
 Cách chạy bản chơi thử: Tải folder bin xuống, vào debug va chạy main.exe
 
-- Tiến độ: Đã hoàn thành collision detection. Sẽ tìm cách tạo menu mở đầu đơn giản và tạo các level khác nhau.
+- Tiến độ: Đã hoàn thành game loop. Sẽ hoàn thiện các level và trau chuốt game.
