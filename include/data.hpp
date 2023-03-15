@@ -25,8 +25,7 @@ Vector2f PlayerVelocity;
 
 TTF_Font* font = NULL;
 int DeathCountI = 0;
-const char* DeathCountC = "Death Count: 0";
-Text DeathCountT = Text(DeathCountC, 1.0f, Vector2f());
+Text DeathCountT = Text("Death Count: 0", 0.5f, Vector2f());
 SDL_Texture* DeathCounter = NULL;
 
 struct Level {

@@ -120,6 +120,8 @@ void CollisionCheck() {
     if (Collided) {
         gameLostRunning = true;
         gameplayRunning = false;
+        DeathCountI++;
+        DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
     }
 
     //Going out of bound counts as losing
@@ -145,6 +147,8 @@ void CheckGameWon() {
         gameplayRunning = false;
         gameWinRunning = true;
         ++ID;
+        DeathCountI = 0;
+        DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
     }
 }
 
