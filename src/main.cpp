@@ -12,14 +12,15 @@ int frameDelay = 1000 / frameRate;
 
 int main(int argc, char* argv[]) {
     //SDL initialization
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) 
         std::cout << "SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
-    }
-    if (!(IMG_Init(IMG_INIT_PNG))) {
+    if (!(IMG_Init(IMG_INIT_PNG))) 
         std::cout << "IMG_Init HAS FAILED. ERROR: " << SDL_GetError() << std::endl;
-    }
+    if (TTF_Init() != 0) 
+        std::cout << "TTF_Init HAS FAILED. ERROR: " << TTF_GetError() << std::endl;
     std::cout << "End of warning..." << std::endl;
     int startTick = 0;
+    font = TTF_OpenFont("res/arial.ttf", 48); //I have to load the font here for some reasons. Other places won't work...
 //-------------------------------------------------------------------------------------------------
     //Main game loop
     while (gameRunning) {
@@ -40,10 +41,10 @@ int main(int argc, char* argv[]) {
             RenderMainGame();
             CheckGameWon();
             
-            //debugger
-            std::cout << SDL_GetTicks() << std::endl;
-            std::cout << "MousePos: "; MousePos.print();
-            std::cout << "Bob's Velocity: "; PlayerVelocity.print(); std::cout << std::endl;
+            // //debugger
+            // std::cout << SDL_GetTicks() << std::endl;
+            // std::cout << "MousePos: "; MousePos.print();
+            // std::cout << "Bob's Velocity: "; PlayerVelocity.print(); std::cout << std::endl;
 
             AdjustFrameTime(startTick);
         }

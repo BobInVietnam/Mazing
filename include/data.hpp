@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <vector>
 #include "render.hpp"
 
@@ -16,13 +17,17 @@ Texture player_hit(window.loadTexture("res/thing_oof.png"), Vector2f(40, 40));
 Texture goal(window.loadTexture("res/goal.png"), Vector2f(30, 30));
 Texture obstacle(window.loadTexture("res/blockade.png"), Vector2f(200, 50));
 
-//TTF_Font font = TTF_OpenFont()
-
 //Player-related variables
 Player Bob(player);
 Entity Goal(goal, Vector2f(), Vector2f(40, 40));
 Vector2f MousePos;
 Vector2f PlayerVelocity;
+
+TTF_Font* font = NULL;
+int DeathCountI = 0;
+const char* DeathCountC = "Death Count: 0";
+Text DeathCountT = Text(DeathCountC, 1.0f, Vector2f());
+SDL_Texture* DeathCounter = NULL;
 
 struct Level {
     Level(std::vector<Obstacle> p_obslist, Vector2f p_spos, Vector2f p_ssize, Vector2f p_gpos, int p_speed) 

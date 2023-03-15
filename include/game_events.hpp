@@ -1,18 +1,17 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
 #include "data.hpp" 
 
 SDL_Event gameEvent;
 
 bool gameRunning = true;
 
+//New game menu
 bool gameMenuRunning = true;
 void RenderMenu();
 void ProcessMenuEvent();
 
+//Actual gameplay
 bool gameplayRunning = false;
 bool gameplayPausing = false;
 void PauseGame();
@@ -25,15 +24,18 @@ void CollisionCheck();
 void CheckGameWon();
 void InitiateLevel();
 
+//Lost menu
 bool gameLostRunning = false;
 void RenderGameLostMenu();
 void ProcessGLMenuEvent();
 
+//Won menu
 bool gameWinRunning = false;
 void RenderGameWonMenu();
 void ProcessGWMenuEvent();
 
 //-------------------------------------------------------------------------------------------------
+//Menu
 void ProcessMenuEvent() {
     while (SDL_PollEvent(&gameEvent)) {
         switch (gameEvent.type) {
@@ -62,6 +64,14 @@ void RenderMenu() {
     window.clear();
     window.renderBackground(menu);
     window.display();
+}
+//Gameplay
+void InitiateLevel() {
+    DeathCounter = window.loadText(DeathCountT, font);
+    Bob.setPos(lv[ID].StartingPos);
+    Bob.setSize(lv[ID].StartingSize);
+    Goal.setPos(lv[ID].GoalPos);
+    PlayerVelocity = Vector2f();
 }
 void ProcessGameEvent() {
     while (SDL_PollEvent(&gameEvent)) {
@@ -112,6 +122,7 @@ void CollisionCheck() {
         gameplayRunning = false;
     }
 
+    //Going out of bound counts as losing
     if (Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
     ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) {
         gameLostRunning = true;
@@ -125,6 +136,7 @@ void RenderMainGame() {
     for (Obstacle i : lv[ID].ObstacleList) window.renderEntity(i);
     window.renderEntity(Goal);
     window.renderEntity(Bob);
+    window.renderText(DeathCounter, DeathCountT);
     window.display();
 }
 
@@ -168,13 +180,7 @@ void RegisterMousePos() {
     MousePos.y = gameEvent.button.y - Bob.getSize().y/2;
 }
 
-void InitiateLevel() {
-    Bob.setPos(lv[ID].StartingPos);
-    Bob.setSize(lv[ID].StartingSize);
-    Goal.setPos(lv[ID].GoalPos);
-    PlayerVelocity = Vector2f();
-}
-
+//Lose
 void RenderGameLostMenu() {
     window.clear();
     window.renderBackground(lost);
@@ -210,7 +216,7 @@ void ProcessGLMenuEvent() {
         }
     }
 }
-
+//Win
 void RenderGameWonMenu() {
     window.clear();
     window.renderBackground(win);
