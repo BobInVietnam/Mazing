@@ -118,7 +118,7 @@ void ProcessGameEvent() {
             i.move(i.ObsVelocity);
             Vector2f ObsAcceleration = velocityAB(i.getPos(), i.getGravityOrigin(), i.ObsGravity * distanceAB(i.getPos(), i.getGravityOrigin()));
             i.ObsVelocity = i.ObsVelocity + ObsAcceleration;
-        }
+            }
         }
     }
 }
