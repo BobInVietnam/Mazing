@@ -23,8 +23,8 @@ Obstacle::Obstacle(Texture p_tex, Vector2f p_size, float p_speed, Vector2f p_A, 
     ObsVelocity = velocityAB(posA, posB, p_speed);
     moving = true;
 }
-Obstacle::Obstacle(Texture p_tex, Vector2f p_size, Vector2f p_iniVelo, float p_acc, Vector2f p_origin)
-:ObsGravity(p_acc), iniVelocity(p_iniVelo), posA(p_origin)
+Obstacle::Obstacle(Texture p_tex, Vector2f p_size, Vector2f p_iniVelo, float p_acc, Vector2f p_origin, Vector2f p_gravOrigin)
+:ObsGravity(p_acc), iniVelocity(p_iniVelo), posA(p_origin), posB(p_gravOrigin)
 {
     texture = p_tex;
     size = p_size;

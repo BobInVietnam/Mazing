@@ -44,7 +44,8 @@ const int LEVEL_NUM = 3;
 //Level 1
 std::vector<Obstacle> ObsList1 = {  Obstacle(obstacle, Vector2f(300, 400), Vector2f(400, 80))
                                 ,   Obstacle(obstacle, Vector2f(80, 80), 5.0f, Vector2f(100, 100), Vector2f(100, 400))
-                                ,   Obstacle(obstacle, Vector2f(80, 80), Vector2f(10, 10), 0.003f, Vector2f(800, 200))};
+                                ,   Obstacle(obstacle, Vector2f(80, 80), Vector2f(10, 10), 0.003f, Vector2f(800, 200), Vector2f(800, 200))
+                                ,   Obstacle(obstacle, Vector2f(40, 40), Vector2f(0, 40), 0.0064f, Vector2f(100, 400), Vector2f(600, 400))};
 const Vector2f PLAYER_POS_L1 = Vector2f(300, 300);
 const Vector2f PLAYER_SIZE_L1 = Vector2f(30, 30);
 const int PLAYER_SPEED_L1 = 10;
