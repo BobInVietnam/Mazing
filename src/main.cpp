@@ -42,9 +42,9 @@ int main(int argc, char* argv[]) {
             CheckGameWon();
             
             // //debugger
-            // std::cout << SDL_GetTicks() << std::endl;
-            // std::cout << "MousePos: "; MousePos.print();
-            // std::cout << "Bob's Velocity: "; PlayerVelocity.print(); std::cout << std::endl;
+            std::cout << SDL_GetTicks() << std::endl;
+            std::cout << "MousePos: "; MousePos.print();
+            std::cout << "Bob's Velocity: "; PlayerVelocity.print(); std::cout << std::endl;
 
             AdjustFrameTime(startTick);
         }
