@@ -11,6 +11,7 @@ protected:
     Vector2f position;
     Vector2f size;
 public:
+    Entity();
     Entity(Texture p_tex);
     Entity(Texture p_tex, Vector2f p_pos, Vector2f p_size);
     void move(Vector2f p_velocity);
@@ -25,6 +26,15 @@ class Obstacle : public Entity
 public:
     Obstacle(Texture p_tex, Vector2f p_pos, Vector2f p_size) : Entity(p_tex, p_pos, p_size) 
     {};
+    Obstacle(Texture p_tex, Vector2f p_size, float p_speed, Vector2f p_A, Vector2f p_B);
+    Vector2f ObsVelocity = Vector2f();
+    bool moving = false;
+    Vector2f getStartingPos() { return posA;}
+    bool reachedEnd();
+private:
+    float ObsSpeed = 0;
+    Vector2f posA = Vector2f();
+    Vector2f posB = Vector2f();
 };
 class Player : public Entity
 {

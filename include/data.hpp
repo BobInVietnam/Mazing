@@ -13,7 +13,7 @@ SDL_Texture* win = window.loadTexture("res/win.png");
 SDL_Texture* lost = window.loadTexture("res/lost.png");
 
 Texture player(window.loadTexture("res/thing.png"), Vector2f(40, 40));
-Texture player_hit(window.loadTexture("res/thing_oof.png"), Vector2f(40, 40));
+// Texture player_hit(window.loadTexture("res/thing_oof.png"), Vector2f(40, 40));
 Texture goal(window.loadTexture("res/goal.png"), Vector2f(30, 30));
 Texture obstacle(window.loadTexture("res/blockade.png"), Vector2f(200, 50));
 
@@ -42,12 +42,12 @@ struct Level {
 const int LEVEL_NUM = 3;
 
 //Level 1
-std::vector<Obstacle> ObsList1 = {  Obstacle(obstacle, Vector2f(100, 100), Vector2f(400, 80))
-                                ,   Obstacle(obstacle, Vector2f(700, 100), Vector2f(80, 200))};
+std::vector<Obstacle> ObsList1 = {  Obstacle(obstacle, Vector2f(300, 400), Vector2f(400, 80))
+                                ,   Obstacle(obstacle, Vector2f(80, 200), 10, Vector2f(100, 100), Vector2f(300, 300))};
 const Vector2f PLAYER_POS_L1 = Vector2f(300, 300);
 const Vector2f PLAYER_SIZE_L1 = Vector2f(30, 30);
 const int PLAYER_SPEED_L1 = 10;
-const Vector2f GOAL_POS_L1 = Vector2f(600, 400);
+const Vector2f GOAL_POS_L1 = Vector2f(600, 600);
 
 //Level 2
 std::vector<Obstacle> ObsList2 = {  Obstacle(obstacle, Vector2f(100, 100), Vector2f(400, 80))

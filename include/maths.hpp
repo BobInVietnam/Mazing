@@ -15,7 +15,9 @@ struct Vector2f
     {};
 
     void print();
+    void invert();
     bool operator == (Vector2f);
+    bool operator != (Vector2f);
 };
 
-Vector2f velocityAB(Vector2f p_A, Vector2f p_B, int p_speed);
+Vector2f velocityAB(Vector2f p_A, Vector2f p_B, float p_speed);

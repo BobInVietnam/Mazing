@@ -11,7 +11,7 @@ bool gameMenuRunning = true;
 void RenderMenu();
 void ProcessMenuEvent();
 
-//Actual gameplay
+//Gameplay
 bool gameplayRunning = false;
 bool gameplayPausing = false;
 void PauseGame();
@@ -72,6 +72,8 @@ void InitiateLevel() {
     Bob.setSize(lv[ID].StartingSize);
     Goal.setPos(lv[ID].GoalPos);
     PlayerVelocity = Vector2f();
+    for (Obstacle& i : lv[ID].ObstacleList)
+        if (i.moving == true) i.setPos(i.getStartingPos());
 }
 void ProcessGameEvent() {
     while (SDL_PollEvent(&gameEvent)) {
@@ -96,13 +98,18 @@ void ProcessGameEvent() {
                 break;
         }
     }
+    //update game
     Bob.move(PlayerVelocity);
+    for (Obstacle& i : lv[ID].ObstacleList) {
+        if (i.moving == true) i.move(i.ObsVelocity);
+        if (i.reachedEnd()) i.ObsVelocity.invert();
+    }
 }
 
 
 void CollisionCheck() {
     bool Collided = false;
-    for (Obstacle i : lv[ID].ObstacleList) {
+    for (Obstacle& i : lv[ID].ObstacleList) {
         if (Bob.Collided(i)) {
             Collided = true;
             break;
