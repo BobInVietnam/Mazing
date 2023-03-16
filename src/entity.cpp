@@ -17,11 +17,20 @@ Entity::Entity(Texture p_tex)
 Obstacle::Obstacle(Texture p_tex, Vector2f p_size, float p_speed, Vector2f p_A, Vector2f p_B)
 :ObsSpeed(p_speed), posA(p_A), posB(p_B)
 {
-        texture = p_tex;
-        size = p_size;
-        position = p_A;
-        ObsVelocity = velocityAB(posA, posB, p_speed);
-        moving = true;
+    texture = p_tex;
+    size = p_size;
+    position = p_A;
+    ObsVelocity = velocityAB(posA, posB, p_speed);
+    moving = true;
+}
+Obstacle::Obstacle(Texture p_tex, Vector2f p_size, Vector2f p_iniVelo, float p_acc, Vector2f p_origin)
+:ObsGravity(p_acc), iniVelocity(p_iniVelo), posA(p_origin)
+{
+    texture = p_tex;
+    size = p_size;
+    position = p_origin;
+    ObsVelocity = iniVelocity;
+    oscillating = true;
 }
 
 void Entity::move(Vector2f p_velocity) {

@@ -27,12 +27,17 @@ public:
     Obstacle(Texture p_tex, Vector2f p_pos, Vector2f p_size) : Entity(p_tex, p_pos, p_size) 
     {};
     Obstacle(Texture p_tex, Vector2f p_size, float p_speed, Vector2f p_A, Vector2f p_B);
+    Obstacle(Texture p_tex, Vector2f p_size, Vector2f p_iniVelo, float p_acc, Vector2f p_origin);
     Vector2f ObsVelocity = Vector2f();
+    float ObsGravity = 0;
     bool moving = false;
+    bool oscillating = false;
     Vector2f getStartingPos() { return posA;}
+    Vector2f getStartingVelo() { return iniVelocity;}
     bool reachedEnd();
 private:
     float ObsSpeed = 0;
+    Vector2f iniVelocity = Vector2f();
     Vector2f posA = Vector2f();
     Vector2f posB = Vector2f();
 };

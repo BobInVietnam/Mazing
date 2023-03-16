@@ -50,9 +50,9 @@ void renderWindow::renderEntity(Entity p_entity) {
 }
 
 SDL_Texture* renderWindow::loadText(Text p_text, TTF_Font* p_font) {
-    if (p_font == NULL) std::cout << "FAILED TO LOAD FONT!" << std::endl;
+    //if (p_font == NULL) std::cout << "FAILED TO LOAD FONT!" << std::endl;
     SDL_Surface* foo = TTF_RenderText_Solid(p_font, p_text.getText(), {0, 0 ,0});
-    if (foo == NULL) std::cout << "FAILED TO LOAD TEXT! ERROR " << SDL_GetError() << std::endl;
+    //if (foo == NULL) std::cout << "FAILED TO LOAD TEXT! ERROR " << SDL_GetError() << std::endl;
     SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, foo);
     SDL_FreeSurface(foo);
     return tempTexture;

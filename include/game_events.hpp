@@ -74,7 +74,11 @@ void InitiateLevel() {
     Goal.setPos(lv[ID].GoalPos);
     PlayerVelocity = Vector2f();
     for (Obstacle& i : lv[ID].ObstacleList) {
-        if (i.moving == true) i.setPos(i.getStartingPos());
+        if (i.moving) i.setPos(i.getStartingPos());
+        if (i.oscillating) {
+            i.setPos(i.getStartingPos());
+            i.ObsVelocity = i.getStartingVelo();
+        }
     }
     gameStart = false;
 }
@@ -106,8 +110,15 @@ void ProcessGameEvent() {
     Bob.move(PlayerVelocity);
     if (gameStart) {
     for (Obstacle& i : lv[ID].ObstacleList) {
-        if (i.moving == true) i.move(i.ObsVelocity);
-        if (i.reachedEnd()) i.ObsVelocity.invert();
+        if (i.moving == true) {
+            i.move(i.ObsVelocity);
+            if (i.reachedEnd()) i.ObsVelocity.invert();
+        }
+        if (i.oscillating == true) {
+            i.move(i.ObsVelocity);
+            Vector2f ObsAcceleration = velocityAB(i.getPos(), i.getStartingPos(), i.ObsGravity * distanceAB(i.getPos(), i.getStartingPos()));
+            i.ObsVelocity = i.ObsVelocity + ObsAcceleration;
+        }
         }
     }
 }

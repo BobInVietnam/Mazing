@@ -14,6 +14,12 @@ bool Vector2f::operator== (Vector2f p_vct) {
 bool Vector2f::operator!= (Vector2f p_vct) {
     return (!(x == p_vct.x && y == p_vct.y));
 }
+Vector2f Vector2f::operator + (Vector2f p_vct) {
+    Vector2f res;
+    res.x = x + p_vct.x;
+    res.y = y + p_vct.y;
+    return res;
+}
 
 Vector2f velocityAB(Vector2f p_A, Vector2f p_B, float p_speed) {
     Vector2f velocity;
@@ -25,4 +31,8 @@ Vector2f velocityAB(Vector2f p_A, Vector2f p_B, float p_speed) {
     velocity.x = p_speed * (veloX / veloXY);
     velocity.y = p_speed * (veloY / veloXY);
     return velocity;
+}
+
+float distanceAB(Vector2f p_A, Vector2f p_B) {
+    return (SDL_sqrt((p_A.x - p_B.x)*(p_A.x - p_B.x) + (p_A.y - p_B.y)*(p_A.y - p_B.y)));
 }
