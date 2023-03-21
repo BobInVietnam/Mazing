@@ -10,6 +10,7 @@ bool gameRunning = true;
 bool gameMenuRunning = true;
 void RenderMenu();
 void ProcessMenuEvent();
+void InitiateLevel();
 
 //Gameplay
 bool gameStart = false;
@@ -18,12 +19,13 @@ bool gameplayPausing = false;
 void PauseGame();
 void QuitGame();
 void RegisterMousePos();
+std::vector<Key> LevelKeys = {};
+std::vector<Entity> Locks = {};
 void ProcessGameEvent();
 void RenderMainGame();
-bool AlreadyCollided = false;
+// bool AlreadyCollided = false; so i can use it for collision check
 void CollisionCheck();
 void CheckGameWon();
-void InitiateLevel();
 
 //Lost menu
 bool gameLostRunning = false;
@@ -80,6 +82,12 @@ void InitiateLevel() {
             i.ObsVelocity = i.getStartingVelo();
         }
     }
+    Locks = {};
+    LevelKeys = lv[ID].KeyList;
+    for (Key& i : LevelKeys) {
+        Entity locky(lock, Vector2f(i.getLockPos()), Vector2f(i.getLockSize()));
+        Locks.push_back(locky);
+    }
     gameStart = false;
 }
 void ProcessGameEvent() {
@@ -131,6 +139,16 @@ void CollisionCheck() {
             Collided = true;
             break;
         }
+    } 
+    for (int i = 0; i < LevelKeys.size(); ++i) {
+        if (Bob.Collided(Locks[i])) {
+            Collided = true;
+            break;
+        }
+        if (Bob.Collided(LevelKeys[i])) {
+            LevelKeys.erase(LevelKeys.begin()+i);
+            Locks.erase(Locks.begin()+i);
+        }
     }
     // if (Collided && !AlreadyCollided) {
     //     AlreadyCollided = true;
@@ -141,25 +159,23 @@ void CollisionCheck() {
     //     Bob.changeTex(player);
     // }
 
-    if (Collided) {
+    //Going out of bound counts as losing
+    if (Collided
+    ||  Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
+    ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) {
         gameLostRunning = true;
         gameplayRunning = false;
         DeathCountI++;
         DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
-    }
-
-    //Going out of bound counts as losing
-    if (Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
-    ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) {
-        gameLostRunning = true;
-        gameplayRunning = false;
     }
 }
 
 void RenderMainGame() {
     window.clear();
     window.renderBackground(bg);
-    for (Obstacle i : lv[ID].ObstacleList) window.renderEntity(i);
+    for (Obstacle& i : lv[ID].ObstacleList) window.renderEntity(i);
+    for (Entity& i : LevelKeys) window.renderEntity(i);
+    for (Entity& i : Locks) window.renderEntity(i);
     window.renderEntity(Goal);
     window.renderEntity(Bob);
     window.renderText(DeathCounter, DeathCountT);
@@ -230,6 +246,8 @@ void ProcessGLMenuEvent() {
                         gameLostRunning = false;
                         gameMenuRunning = true;
                         ID = 0;
+                        DeathCountI = 0;
+                        DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
                         break;
                     case SDLK_r:
                         gameLostRunning = false;

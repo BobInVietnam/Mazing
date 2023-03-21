@@ -32,6 +32,13 @@ Obstacle::Obstacle(Texture p_tex, Vector2f p_size, Vector2f p_iniVelo, float p_a
     ObsVelocity = iniVelocity;
     oscillating = true;
 }
+Key::Key(Texture p_keyTex, Vector2f p_keyPos, Texture p_lockTex, Vector2f p_lockPos, Vector2f p_lockSize)
+:lockTex(p_lockTex), lockPosition(p_lockPos), lockSize(p_lockSize)
+{
+    texture = p_keyTex;
+    position = p_keyPos;
+    size = Vector2f(30, 30);
+}
 
 void Entity::move(Vector2f p_velocity) {
     position.x += p_velocity.x;
