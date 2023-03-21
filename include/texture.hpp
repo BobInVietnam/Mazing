@@ -4,6 +4,12 @@
 #include "maths.hpp"
 
 struct Texture {
+    Texture()
+    {
+        texture = NULL;
+        size = Vector2f();
+        frameNum = 1;
+    }
     Texture(SDL_Texture * p_tex, Vector2f p_size)
     :texture(p_tex), size(p_size)
     {

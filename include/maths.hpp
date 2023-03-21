@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
-const int SCREEN_WIDTH = 1000;
+const int SCREEN_WIDTH = 1200;
 const int SCREEN_HEIGHT = 800;
 
 struct Vector2f
@@ -15,7 +15,11 @@ struct Vector2f
     {};
 
     void print();
+    void invert();
     bool operator == (Vector2f);
+    bool operator != (Vector2f);
+    Vector2f operator + (Vector2f);
 };
 
-Vector2f velocityAB(Vector2f p_A, Vector2f p_B, int p_speed);
+Vector2f velocityAB(Vector2f p_A, Vector2f p_B, float p_speed);
+float distanceAB(Vector2f p_A, Vector2f p_B);

@@ -48,8 +48,22 @@ void renderWindow::renderEntity(Entity p_entity) {
     des.h = p_entity.getSize().y;
     SDL_RenderCopy(renderer, p_entity.getTex().texture, &src, &des);
 }
-void renderWindow::renderText(const char* p_string) {
-    
+
+SDL_Texture* renderWindow::loadText(Text p_text, TTF_Font* p_font) {
+    //if (p_font == NULL) std::cout << "FAILED TO LOAD FONT!" << std::endl;
+    SDL_Surface* foo = TTF_RenderText_Solid(p_font, p_text.getText(), {0, 0 ,0});
+    //if (foo == NULL) std::cout << "FAILED TO LOAD TEXT! ERROR " << SDL_GetError() << std::endl;
+    SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, foo);
+    SDL_FreeSurface(foo);
+    return tempTexture;
+}
+
+void renderWindow::renderText(SDL_Texture* p_tex, Text p_txt) {
+    int texW = 0;
+    int texH = 0;
+    SDL_QueryTexture(p_tex, NULL, NULL, &texW, &texH);
+    SDL_Rect des = {(int) p_txt.getPos().x, (int) p_txt.getPos().y, (int) (texW * p_txt.getSize()), (int) (texH * p_txt.getSize())};
+    SDL_RenderCopy(renderer, p_tex, NULL, &des);
 }
 
 SDL_Renderer* renderWindow::getRenderer() {

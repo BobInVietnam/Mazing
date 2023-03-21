@@ -1,39 +1,44 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
 #include "data.hpp" 
 
 SDL_Event gameEvent;
 
 bool gameRunning = true;
 
+//New game menu
 bool gameMenuRunning = true;
 void RenderMenu();
 void ProcessMenuEvent();
+void InitiateLevel();
 
+//Gameplay
+bool gameStart = false;
 bool gameplayRunning = false;
 bool gameplayPausing = false;
 void PauseGame();
 void QuitGame();
 void RegisterMousePos();
+std::vector<Key> LevelKeys = {};
+std::vector<Entity> Locks = {};
 void ProcessGameEvent();
 void RenderMainGame();
-bool AlreadyCollided = false;
+// bool AlreadyCollided = false; so i can use it for collision check
 void CollisionCheck();
 void CheckGameWon();
-void InitiateLevel();
 
+//Lost menu
 bool gameLostRunning = false;
 void RenderGameLostMenu();
 void ProcessGLMenuEvent();
 
+//Won menu
 bool gameWinRunning = false;
 void RenderGameWonMenu();
 void ProcessGWMenuEvent();
 
 //-------------------------------------------------------------------------------------------------
+//Menu
 void ProcessMenuEvent() {
     while (SDL_PollEvent(&gameEvent)) {
         switch (gameEvent.type) {
@@ -63,6 +68,28 @@ void RenderMenu() {
     window.renderBackground(menu);
     window.display();
 }
+//Gameplay
+void InitiateLevel() {
+    DeathCounter = window.loadText(DeathCountT, font);
+    Bob.setPos(lv[ID].StartingPos);
+    Bob.setSize(lv[ID].StartingSize);
+    Goal.setPos(lv[ID].GoalPos);
+    PlayerVelocity = Vector2f();
+    for (Obstacle& i : lv[ID].ObstacleList) {
+        if (i.moving) i.setPos(i.getStartingPos());
+        if (i.oscillating) {
+            i.setPos(i.getStartingPos());
+            i.ObsVelocity = i.getStartingVelo();
+        }
+    }
+    Locks = {};
+    LevelKeys = lv[ID].KeyList;
+    for (Key& i : LevelKeys) {
+        Entity locky(lock, Vector2f(i.getLockPos()), Vector2f(i.getLockSize()));
+        Locks.push_back(locky);
+    }
+    gameStart = false;
+}
 void ProcessGameEvent() {
     while (SDL_PollEvent(&gameEvent)) {
         switch (gameEvent.type) {
@@ -72,6 +99,7 @@ void ProcessGameEvent() {
             case SDL_MOUSEBUTTONDOWN:
                 RegisterMousePos();
                 PlayerVelocity = velocityAB(Bob.getPos(), MousePos, lv[ID].PlayerLevelSpeed);
+                gameStart = true;
                 break;
             case SDL_KEYDOWN: 
                 switch (gameEvent.key.keysym.sym) {
@@ -86,16 +114,40 @@ void ProcessGameEvent() {
                 break;
         }
     }
+    //update game
     Bob.move(PlayerVelocity);
+    if (gameStart) {
+    for (Obstacle& i : lv[ID].ObstacleList) {
+        if (i.moving == true) {
+            i.move(i.ObsVelocity);
+            if (i.reachedEnd()) i.ObsVelocity.invert();
+        }
+        if (i.oscillating == true) {
+            i.move(i.ObsVelocity);
+            Vector2f ObsAcceleration = velocityAB(i.getPos(), i.getGravityOrigin(), i.ObsGravity * distanceAB(i.getPos(), i.getGravityOrigin()));
+            i.ObsVelocity = i.ObsVelocity + ObsAcceleration;
+            }
+        }
+    }
 }
 
 
 void CollisionCheck() {
     bool Collided = false;
-    for (Obstacle i : lv[ID].ObstacleList) {
+    for (Obstacle& i : lv[ID].ObstacleList) {
         if (Bob.Collided(i)) {
             Collided = true;
             break;
+        }
+    } 
+    for (int i = 0; i < LevelKeys.size(); ++i) {
+        if (Bob.Collided(Locks[i])) {
+            Collided = true;
+            break;
+        }
+        if (Bob.Collided(LevelKeys[i])) {
+            LevelKeys.erase(LevelKeys.begin()+i);
+            Locks.erase(Locks.begin()+i);
         }
     }
     // if (Collided && !AlreadyCollided) {
@@ -107,24 +159,26 @@ void CollisionCheck() {
     //     Bob.changeTex(player);
     // }
 
-    if (Collided) {
-        gameLostRunning = true;
-        gameplayRunning = false;
-    }
-
-    if (Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
+    //Going out of bound counts as losing
+    if (Collided
+    ||  Bob.getPos().x + lv[ID].StartingSize.x > SCREEN_WIDTH || Bob.getPos().x < 0
     ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) {
         gameLostRunning = true;
         gameplayRunning = false;
+        DeathCountI++;
+        DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
     }
 }
 
 void RenderMainGame() {
     window.clear();
     window.renderBackground(bg);
-    for (Obstacle i : lv[ID].ObstacleList) window.renderEntity(i);
+    for (Obstacle& i : lv[ID].ObstacleList) window.renderEntity(i);
+    for (Entity& i : LevelKeys) window.renderEntity(i);
+    for (Entity& i : Locks) window.renderEntity(i);
     window.renderEntity(Goal);
     window.renderEntity(Bob);
+    window.renderText(DeathCounter, DeathCountT);
     window.display();
 }
 
@@ -133,6 +187,8 @@ void CheckGameWon() {
         gameplayRunning = false;
         gameWinRunning = true;
         ++ID;
+        DeathCountI = 0;
+        DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
     }
 }
 
@@ -168,13 +224,7 @@ void RegisterMousePos() {
     MousePos.y = gameEvent.button.y - Bob.getSize().y/2;
 }
 
-void InitiateLevel() {
-    Bob.setPos(lv[ID].StartingPos);
-    Bob.setSize(lv[ID].StartingSize);
-    Goal.setPos(lv[ID].GoalPos);
-    PlayerVelocity = Vector2f();
-}
-
+//Lose
 void RenderGameLostMenu() {
     window.clear();
     window.renderBackground(lost);
@@ -196,6 +246,8 @@ void ProcessGLMenuEvent() {
                         gameLostRunning = false;
                         gameMenuRunning = true;
                         ID = 0;
+                        DeathCountI = 0;
+                        DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
                         break;
                     case SDLK_r:
                         gameLostRunning = false;
@@ -210,7 +262,7 @@ void ProcessGLMenuEvent() {
         }
     }
 }
-
+//Win
 void RenderGameWonMenu() {
     window.clear();
     window.renderBackground(win);

@@ -1,5 +1,8 @@
 #include "entity.hpp"
 
+Entity::Entity()
+{}
+
 Entity::Entity(Texture p_tex, Vector2f p_pos, Vector2f p_size)
 :texture(p_tex), position(p_pos), size(p_size)
 {}
@@ -11,9 +14,43 @@ Entity::Entity(Texture p_tex)
     size = Vector2f(0,0);
 }
 
+Obstacle::Obstacle(Texture p_tex, Vector2f p_size, float p_speed, Vector2f p_A, Vector2f p_B)
+:ObsSpeed(p_speed), posA(p_A), posB(p_B)
+{
+    texture = p_tex;
+    size = p_size;
+    position = p_A;
+    ObsVelocity = velocityAB(posA, posB, p_speed);
+    moving = true;
+}
+Obstacle::Obstacle(Texture p_tex, Vector2f p_size, Vector2f p_iniVelo, float p_acc, Vector2f p_origin, Vector2f p_gravOrigin)
+:ObsGravity(p_acc), iniVelocity(p_iniVelo), posA(p_origin), posB(p_gravOrigin)
+{
+    texture = p_tex;
+    size = p_size;
+    position = p_origin;
+    ObsVelocity = iniVelocity;
+    oscillating = true;
+}
+Key::Key(Texture p_keyTex, Vector2f p_keyPos, Texture p_lockTex, Vector2f p_lockPos, Vector2f p_lockSize)
+:lockTex(p_lockTex), lockPosition(p_lockPos), lockSize(p_lockSize)
+{
+    texture = p_keyTex;
+    position = p_keyPos;
+    size = Vector2f(30, 30);
+}
+
 void Entity::move(Vector2f p_velocity) {
     position.x += p_velocity.x;
     position.y += p_velocity.y;
+}
+
+bool Obstacle::reachedEnd() {
+    if (position.x > (posA.x > posB.x ? posA.x : posB.x) ||
+        position.x < (posA.x < posB.x ? posA.x : posB.x) ||
+        position.y > (posA.y > posB.y ? posA.y : posB.y) ||
+        position.y < (posA.y < posB.y ? posA.y : posB.y)) return true;
+    else return false;
 }
 
 void Player::changeTex(Texture p_tex) 
