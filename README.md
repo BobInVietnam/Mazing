@@ -7,4 +7,4 @@ Hãy né những khối đỏ và về đích trong thời gian ngắn nhất.
 
 Cách chạy bản chơi thử: Tải folder bin xuống, vào debug va chạy main.exe
 
-- Tiến độ: Đã thêm bộ đếm số lần thua và chướng ngại vật di chuyển thẳng. Sẽ nghiên cứu các loại chướng ngại vật khác.
+- Tiến độ: Đã thêm chướng ngại vật di chuyển và chìa khóa - ổ khóa. Sẽ hoàn thiện game bằng cách tạo các level mới.
