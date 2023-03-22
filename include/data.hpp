@@ -48,7 +48,7 @@ struct Level {
     float PlayerLevelSpeed;
 };
 
-const int LEVEL_NUM = 6;
+const int LEVEL_NUM = 7;
 
 //Level 1
 std::vector<Obstacle> ObsList1 = {  Obstacle(obstacle, Vector2f(400, 280), Vector2f(400, 240))};
@@ -114,6 +114,22 @@ const Vector2f PLAYER_SIZE_L6 = Vector2f(60, 60);
 const float PLAYER_SPEED_L6 = 12;
 const Vector2f GOAL_POS_L6 = Vector2f(1120, 385);
 
+//Level 7
+std::vector<Obstacle> ObsList7 = {  Obstacle(obstacle, Vector2f(200, 0), Vector2f(40, 600))
+                                ,   Obstacle(obstacle, Vector2f(400, 200), Vector2f(40, 600))
+                                ,   Obstacle(obstacle, Vector2f(600, 0), Vector2f(40, 600))
+                                ,   Obstacle(obstacle, Vector2f(800, 200), Vector2f(40, 600))
+                                ,   Obstacle(obstacle, Vector2f(840, 200), Vector2f(200, 40))
+                                ,   Obstacle(obstacle, Vector2f(1000, 400), Vector2f(200, 40))
+                                ,   Obstacle(obstacle, Vector2f(840, 600), Vector2f(200, 40))
+                                ,   Obstacle(movingObstacle, Vector2f(20, 400), 10, Vector2f(1180, 0), Vector2f(0, 0))
+                                ,   Obstacle(movingObstacle, Vector2f(20, 400), 10, Vector2f(0, 0), Vector2f(1180, 400))};
+const Vector2f PLAYER_POS_L7 = Vector2f(60, 60);
+const Vector2f PLAYER_SIZE_L7 = Vector2f(60, 60);
+const float PLAYER_SPEED_L7 = 12;
+const Vector2f GOAL_POS_L7 = Vector2f(1080, 680);
+
+//
 
 
 int ID = 0;
@@ -123,6 +139,7 @@ Level lv[LEVEL_NUM] = { Level(ObsList1, PLAYER_POS_L1, PLAYER_SIZE_L1, GOAL_POS_
                     ,   Level(ObsList4, PLAYER_POS_L4, PLAYER_SIZE_L4, GOAL_POS_L4, PLAYER_SPEED_L4)
                     ,   Level(ObsList5, PLAYER_POS_L5, PLAYER_SIZE_L5, GOAL_POS_L5, PLAYER_SPEED_L5)
                     ,   Level(ObsList6, PLAYER_POS_L6, PLAYER_SIZE_L6, GOAL_POS_L6, PLAYER_SPEED_L6)
+                    ,   Level(ObsList7, PLAYER_POS_L7, PLAYER_SIZE_L7, GOAL_POS_L7, PLAYER_SPEED_L7)
                     };
 
 // std::vector<Obstacle> ObsList3 = {  Obstacle(obstacle, Vector2f(80, 80), Vector2f(40, 280))
