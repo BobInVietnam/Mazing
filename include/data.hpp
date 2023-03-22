@@ -123,7 +123,7 @@ std::vector<Obstacle> ObsList7 = {  Obstacle(obstacle, Vector2f(200, 0), Vector2
                                 ,   Obstacle(obstacle, Vector2f(1000, 400), Vector2f(200, 40))
                                 ,   Obstacle(obstacle, Vector2f(840, 600), Vector2f(200, 40))
                                 ,   Obstacle(movingObstacle, Vector2f(20, 400), 10, Vector2f(1180, 0), Vector2f(0, 0))
-                                ,   Obstacle(movingObstacle, Vector2f(20, 400), 10, Vector2f(0, 0), Vector2f(1180, 400))};
+                                ,   Obstacle(movingObstacle, Vector2f(20, 400), 10, Vector2f(0, 400), Vector2f(1180, 400))};
 const Vector2f PLAYER_POS_L7 = Vector2f(60, 60);
 const Vector2f PLAYER_SIZE_L7 = Vector2f(60, 60);
 const float PLAYER_SPEED_L7 = 12;
