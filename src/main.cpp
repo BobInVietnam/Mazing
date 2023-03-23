@@ -32,6 +32,8 @@ int main(int argc, char* argv[]) {
             AdjustFrameTime(startTick);
         }
 
+        
+
         InitiateLevel();
 
         while (gameplayRunning) {

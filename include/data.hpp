@@ -48,7 +48,7 @@ struct Level {
     float PlayerLevelSpeed;
 };
 
-const int LEVEL_NUM = 7;
+const int LEVEL_NUM = 8;
 
 //Level 1
 std::vector<Obstacle> ObsList1 = {  Obstacle(obstacle, Vector2f(400, 280), Vector2f(400, 240))};
@@ -129,6 +129,28 @@ const Vector2f PLAYER_SIZE_L7 = Vector2f(60, 60);
 const float PLAYER_SPEED_L7 = 12;
 const Vector2f GOAL_POS_L7 = Vector2f(1080, 680);
 
+//Level 8
+std::vector<Obstacle> ObsList8 = {  Obstacle(obstacle, Vector2f(80, 80), Vector2f(40, 280))
+                                ,   Obstacle(obstacle, Vector2f(80, 440), Vector2f(40, 280))
+                                ,   Obstacle(obstacle, Vector2f(120, 80), Vector2f(760, 40))
+                                ,   Obstacle(obstacle, Vector2f(120, 680), Vector2f(760, 40))
+                                ,   Obstacle(obstacle, Vector2f(840, 120), Vector2f(40, 240))
+                                ,   Obstacle(obstacle, Vector2f(840, 440), Vector2f(40, 240))
+                                ,   Obstacle(obstacle, Vector2f(240, 240), Vector2f(40, 320))
+                                ,   Obstacle(obstacle, Vector2f(400, 120), Vector2f(40, 200))
+                                ,   Obstacle(obstacle, Vector2f(400, 480), Vector2f(40, 120))
+                                ,   Obstacle(obstacle, Vector2f(560, 240), Vector2f(40, 440))
+                                ,   Obstacle(obstacle, Vector2f(720, 120), Vector2f(40, 480))
+                                ,   Obstacle(obstacle, Vector2f(880, 80), Vector2f(240, 40))
+                                ,   Obstacle(obstacle, Vector2f(880, 680), Vector2f(240, 40))
+                                ,   Obstacle(obstacle, Vector2f(1080, 120), Vector2f(40, 560))
+                                ,   Obstacle(movingObstacle, Vector2f(200, 80), 10, Vector2f(880, 120), Vector2f(880, 600))
+                                };
+const Vector2f PLAYER_POS_L8 = Vector2f(40, 380);
+const Vector2f PLAYER_SIZE_L8 = Vector2f(40, 40);
+const float PLAYER_SPEED_L8 = 12;
+const Vector2f GOAL_POS_L8 = Vector2f(970, 620);
+
 //
 
 
@@ -140,6 +162,7 @@ Level lv[LEVEL_NUM] = { Level(ObsList1, PLAYER_POS_L1, PLAYER_SIZE_L1, GOAL_POS_
                     ,   Level(ObsList5, PLAYER_POS_L5, PLAYER_SIZE_L5, GOAL_POS_L5, PLAYER_SPEED_L5)
                     ,   Level(ObsList6, PLAYER_POS_L6, PLAYER_SIZE_L6, GOAL_POS_L6, PLAYER_SPEED_L6)
                     ,   Level(ObsList7, PLAYER_POS_L7, PLAYER_SIZE_L7, GOAL_POS_L7, PLAYER_SPEED_L7)
+                    ,   Level(ObsList8, PLAYER_POS_L8, PLAYER_SIZE_L8, GOAL_POS_L8, PLAYER_SPEED_L8)
                     };
 
 // std::vector<Obstacle> ObsList3 = {  Obstacle(obstacle, Vector2f(80, 80), Vector2f(40, 280))
