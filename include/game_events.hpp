@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include "data.hpp" 
 
 SDL_Event gameEvent;
@@ -19,12 +20,10 @@ bool gameplayPausing = false;
 void PauseGame();
 void QuitGame();
 void RegisterMousePos();
-std::vector<Key> LevelKeys = {};
-std::vector<Entity> Locks = {};
 void ProcessGameEvent();
 void RenderMainGame();
-// bool AlreadyCollided = false; so i can use it for collision check
 void CollisionCheck();
+void ProcessObstacles();
 void CheckGameWon();
 
 //Lost menu
@@ -70,6 +69,7 @@ void RenderMenu() {
 }
 //Gameplay
 void InitiateLevel() {
+    GameTimer = window.loadText(GameTimerT, font);
     DeathCounter = window.loadText(DeathCountT, font);
     Bob.setPos(lv[ID].StartingPos);
     Bob.setSize(lv[ID].StartingSize);
@@ -89,7 +89,9 @@ void InitiateLevel() {
         Locks.push_back(locky);
     }
     gameStart = false;
+    startingTime = SDL_GetTicks();
 }
+
 void ProcessGameEvent() {
     while (SDL_PollEvent(&gameEvent)) {
         switch (gameEvent.type) {
@@ -117,6 +119,15 @@ void ProcessGameEvent() {
     //update game
     Bob.move(PlayerVelocity);
     if (gameStart) {
+        ProcessObstacles();
+    }
+    GameTimerI = SDL_GetTicks() - startingTime;
+    GameTimerT.changeText("Time : " + std::to_string(GameTimerI) + "ms");
+    SDL_DestroyTexture(GameTimer);
+    GameTimer = window.loadText(GameTimerT, font);
+}
+
+void ProcessObstacles() {
     for (Obstacle& i : lv[ID].ObstacleList) {
         if (i.moving == true) {
             i.move(i.ObsVelocity);
@@ -128,9 +139,7 @@ void ProcessGameEvent() {
             i.ObsVelocity = i.ObsVelocity + ObsAcceleration;
             }
         }
-    }
 }
-
 
 void CollisionCheck() {
     bool Collided = false;
@@ -150,14 +159,6 @@ void CollisionCheck() {
             Locks.erase(Locks.begin()+i);
         }
     }
-    // if (Collided && !AlreadyCollided) {
-    //     AlreadyCollided = true;
-    //     Bob.changeTex(player_hit);
-    // }
-    // if (!Collided && AlreadyCollided) {
-    //     AlreadyCollided = false;
-    //     Bob.changeTex(player);
-    // }
 
     //Going out of bound counts as losing
     if (Collided
@@ -167,6 +168,7 @@ void CollisionCheck() {
         gameplayRunning = false;
         DeathCountI++;
         DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
+
     }
 }
 
@@ -179,6 +181,7 @@ void RenderMainGame() {
     window.renderEntity(Goal);
     window.renderEntity(Bob);
     window.renderText(DeathCounter, DeathCountT);
+    window.renderText(GameTimer, GameTimerT);
     window.display();
 }
 
@@ -196,13 +199,20 @@ void PauseGame() {
     gameplayPausing = true;
     while (gameplayPausing) {
         SDL_Delay(50);
+        SDL_Rect src = {0, 0, 80, 80};
+        SDL_Rect des = {0, 720, 80, 80};
+        SDL_RenderCopy(window.getRenderer(), pause.texture, &src, &des);
+        window.display();
         SDL_PollEvent(&gameEvent);
         switch (gameEvent.type) {
             case SDL_QUIT:
                 QuitGame();
                 break;
             case SDL_KEYDOWN:
-                if (gameEvent.key.keysym.sym == SDLK_ESCAPE) gameplayPausing = false;
+                if (gameEvent.key.keysym.sym == SDLK_ESCAPE) {
+                    gameplayPausing = false;
+                    window.clear();
+                }
                 break;
             default:
                 break;
@@ -289,6 +299,13 @@ void ProcessGWMenuEvent() {
                         gameplayRunning = true;
                         --ID;
                         break;   
+                    case SDLK_m:
+                        gameLostRunning = false;
+                        gameMenuRunning = true;
+                        ID = 0;
+                        DeathCountI = 0;
+                        DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
+                        break;
                     default:
                         break;
                 SDL_ResetKeyboard();

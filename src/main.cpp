@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
         std::cout << "TTF_Init HAS FAILED. ERROR: " << TTF_GetError() << std::endl;
     std::cout << "End of warning..." << std::endl;
     int startTick = 0;
-    font = TTF_OpenFont("res/arial.ttf", 48); //I have to load the font here for some reasons. Other places won't work...
+    font = TTF_OpenFont("res/arial.ttf", 48);
 //-------------------------------------------------------------------------------------------------
     //Main game loop
     while (gameRunning) {

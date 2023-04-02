@@ -11,7 +11,7 @@ renderWindow::renderWindow(const char* p_title, int p_w, int p_h)
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    //SDL_RenderSetLogicalSize(renderer, 800, 800);
+    //SDL_RenderSetLogicalSize(renderer, 1200, 800);
 }
 
 SDL_Texture* renderWindow::loadTexture(const char* p_filePath) {
