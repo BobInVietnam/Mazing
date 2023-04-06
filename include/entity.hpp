@@ -36,7 +36,6 @@ public:
     float ObsGravity = 0;
     bool moving = false;
     bool oscillating = false;
-    bool circling = false;
     Vector2f getStartingPos() {return posA;}
     Vector2f getStartingVelo() {return iniVelocity;}
     Vector2f getGravityOrigin() {return posB;}
