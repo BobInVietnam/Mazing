@@ -69,6 +69,8 @@ void RenderMenu() {
 }
 //Gameplay
 void InitiateLevel() {
+    GameTimerT.changePos(Vector2f(0, 20));
+    DeathCountT.changePos(Vector2f());
     GameTimer = window.loadText(GameTimerT, font);
     DeathCounter = window.loadText(DeathCountT, font);
     Bob.setPos(lv[ID].StartingPos);
@@ -280,6 +282,10 @@ void ProcessGLMenuEvent() {
 void RenderGameWonMenu() {
     window.clear();
     window.renderBackground(win);
+    GameTimerT.changePos(Vector2f(400, 270));
+    DeathCountT.changePos(Vector2f(400, 300));
+    window.renderText(GameTimer, GameTimerT);
+    window.renderText(DeathCounter, DeathCountT);
     window.display();
 }
 

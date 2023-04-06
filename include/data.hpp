@@ -139,7 +139,7 @@ std::vector<Obstacle> ObsList7 = {     Obstacle(obstacle, Vector2f(200, 0), Vect
                                     ,   Obstacle(obstacle, Vector2f(200, 170), Vector2f(780, 30))
                                     ,   Obstacle(obstacle, Vector2f(1070, 330), Vector2f(100, 30))
                                     ,   Obstacle(obstacle, Vector2f(980, 460), Vector2f(100, 30))
-                                    ,   Obstacle(obstacle, Vector2f(1070, 590), Vector2f(100, 30))
+                                    ,   Obstacle(obstacle, Vector2f(200, 770), Vector2f(1000, 30))
 };
 std::vector<Key> KeyList7 = {  Key(key, Vector2f(280, 230), lock, Vector2f(60, 570), Vector2f(100, 100))
                             ,   Key(key, Vector2f(1060, 690), lock, Vector2f(70, 580), Vector2f(80, 80))

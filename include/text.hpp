@@ -6,6 +6,7 @@ class Text {
 public:
     Text(std::string p_text, float p_size, Vector2f p_pos);
     void changeText(std::string p_text);
+    void changePos(Vector2f p_pos);
     const char* getText() {return text.c_str();}
     float getSize() {return size;}
     Vector2f getPos() {return position;}

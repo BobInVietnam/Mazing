@@ -7,3 +7,7 @@ Text::Text(std::string p_text, float p_size, Vector2f p_pos)
 void Text::changeText(std::string p_text) {
     text = p_text;
 }
+
+void Text::changePos(Vector2f p_pos) {
+    position = p_pos;
+}
