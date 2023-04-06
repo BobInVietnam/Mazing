@@ -197,6 +197,8 @@ void CheckGameWon() {
 
 void PauseGame() {
     gameplayPausing = true;
+    int pauseTotalTimer;
+    int pauseInitTimer = SDL_GetTicks();
     while (gameplayPausing) {
         SDL_Delay(50);
         SDL_Rect src = {0, 0, 80, 80};
@@ -217,7 +219,9 @@ void PauseGame() {
             default:
                 break;
         }
+        pauseTotalTimer = SDL_GetTicks() - pauseInitTimer;
     }
+    startingTime += pauseTotalTimer;
 }
 
 void QuitGame() {
