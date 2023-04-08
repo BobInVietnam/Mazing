@@ -26,10 +26,10 @@ int main(int argc, char* argv[]) {
     while (gameRunning) {
 
         while (gameMenuRunning) {
-            startTick = SDL_GetTicks();
+           startTick = SDL_GetTicks();
             ProcessMenuEvent();
             RenderMenu();
-            AdjustFrameTime(startTick);
+           AdjustFrameTime(startTick);
         }
 
         InitiateLevel();
@@ -78,5 +78,5 @@ int main(int argc, char* argv[]) {
 
 void AdjustFrameTime(int p_tick) {
     int frameTick = SDL_GetTicks() - p_tick;
-    if (frameDelay > frameTick) SDL_Delay(frameDelay - frameTick);
+    if (frameTick < frameDelay) SDL_Delay(frameDelay - frameTick);
 }
