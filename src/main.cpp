@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     //Main game loop
     while (gameRunning) {
 
-        if (bgm == NULL) InitSound();
+        InitSound();
 
         while (gameMenuRunning) {
            startTick = SDL_GetTicks();

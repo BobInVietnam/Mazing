@@ -42,9 +42,9 @@ void ProcessGWMenuEvent();
 //-------------------------------------------------------------------------------------------------
 //Music
 void InitSound() {
-    bgm = Mix_LoadMUS("res/rolling_girl.mp3");
+    if (bgm == NULL) bgm = Mix_LoadMUS("res/rolling_girl.mp3");
     if (bgm == NULL) std::cout << "Cannot load BGM" << std::endl;
-    if (Mix_PlayingMusic() == 0) Mix_PlayMusic(bgm, 0);
+    if (Mix_PlayingMusic() == 0) Mix_PlayMusic(bgm, -1);
 }
 
 //Menu
@@ -161,7 +161,7 @@ void CollisionCheck() {
             break;
         }
     } 
-    for (int i = 0; i < LevelKeys.size(); ++i) {
+    for (int i = 0; i < (int) LevelKeys.size(); ++i) {
         if (Bob.Collided(Locks[i])) {
             Collided = true;
             break;
@@ -209,7 +209,7 @@ void CheckGameWon() {
 
 void PauseGame() {
     gameplayPausing = true;
-    int pauseTotalTimer;
+    int pauseTotalTimer = 0;
     int pauseInitTimer = SDL_GetTicks();
     while (gameplayPausing) {
         SDL_Delay(50);
