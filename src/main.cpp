@@ -18,6 +18,8 @@ int main(int argc, char* argv[]) {
         std::cout << "IMG_Init HAS FAILED. ERROR: " << SDL_GetError() << std::endl;
     if (TTF_Init() != 0) 
         std::cout << "TTF_Init HAS FAILED. ERROR: " << TTF_GetError() << std::endl;
+    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 )
+        std::cout << "Mix_Init HAS FAILED. ERROR: " << Mix_GetError() << std::endl;
     std::cout << "End of warning..." << std::endl;
     int startTick = 0;
     font = TTF_OpenFont("res/arial.ttf", 48);

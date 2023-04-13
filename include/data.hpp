@@ -2,8 +2,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include "audio.hpp"
 #include <vector>
 #include "render.hpp"
+
+//Music
+
 
 //Window & textures initialization 
 renderWindow window("Mazing :)", SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -11,10 +15,11 @@ SDL_Texture* bg = window.loadTexture("res/bg.png");
 SDL_Texture* menu = window.loadTexture("res/intro.png");
 SDL_Texture* win = window.loadTexture("res/win.png");
 SDL_Texture* lost = window.loadTexture("res/lost.png");
+SDL_Texture* victory = window.loadTexture("res/victory.png");
 
-Texture player(window.loadTexture("res/thing.png"), Vector2f(40, 40));
+Texture player(window.loadTexture("res/miku.png"), Vector2f(211, 190));
 // Texture player_hit(window.loadTexture("res/thing_oof.png"), Vector2f(40, 40));
-Texture goal(window.loadTexture("res/goal.png"), Vector2f(30, 30));
+Texture goal(window.loadTexture("res/leek.png"), Vector2f(504, 498));
 Texture obstacle(window.loadTexture("res/blockade.png"), Vector2f(200, 50));
 Texture movingObstacle(window.loadTexture("res/moving_blockade.png"), Vector2f(40, 40));
 Texture lock(window.loadTexture("res/lock.png"), Vector2f(100, 100));

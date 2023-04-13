@@ -281,7 +281,7 @@ void ProcessGLMenuEvent() {
 //Win
 void RenderGameWonMenu() {
     window.clear();
-    window.renderBackground(win);
+    if (ID == LEVEL_NUM) window.renderBackground(victory); else window.renderBackground(win);
     GameTimerT.changePos(Vector2f(400, 270));
     DeathCountT.changePos(Vector2f(400, 300));
     window.renderText(GameTimer, GameTimerT);
