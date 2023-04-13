@@ -45,6 +45,7 @@ void InitSound() {
     if (bgm == NULL) bgm = Mix_LoadMUS("res/rolling_girl.mp3");
     if (bgm == NULL) std::cout << "Cannot load BGM" << std::endl;
     if (Mix_PlayingMusic() == 0) Mix_PlayMusic(bgm, -1);
+    Mix_VolumeMusic(48);
 }
 
 //Menu

@@ -3,9 +3,6 @@
 #include <SDL2/SDL_image.h>
 #include "maths.hpp"
 #include "texture.hpp"
-enum PickupEffect {
-
-};
 
 class Entity
 {
