@@ -7,6 +7,9 @@ SDL_Event gameEvent;
 
 bool gameRunning = true;
 
+//Init music
+void InitSound();
+
 //New game menu
 bool gameMenuRunning = true;
 void RenderMenu();
@@ -37,6 +40,13 @@ void RenderGameWonMenu();
 void ProcessGWMenuEvent();
 
 //-------------------------------------------------------------------------------------------------
+//Music
+void InitSound() {
+    bgm = Mix_LoadMUS("res/rolling_girl.mp3");
+    if (bgm == NULL) std::cout << "Cannot load BGM" << std::endl;
+    if (Mix_PlayingMusic() == 0) Mix_PlayMusic(bgm, 0);
+}
+
 //Menu
 void ProcessMenuEvent() {
     while (SDL_PollEvent(&gameEvent)) {

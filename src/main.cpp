@@ -27,6 +27,8 @@ int main(int argc, char* argv[]) {
     //Main game loop
     while (gameRunning) {
 
+        if (bgm == NULL) InitSound();
+
         while (gameMenuRunning) {
            startTick = SDL_GetTicks();
             ProcessMenuEvent();
@@ -74,6 +76,9 @@ int main(int argc, char* argv[]) {
     SDL_Quit();
     IMG_Quit();
     TTF_Quit();
+    Mix_Quit();
+
+    Mix_FreeMusic(bgm);
     
     return EXIT_SUCCESS;
 }  

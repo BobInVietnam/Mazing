@@ -6,11 +6,8 @@
 #include <vector>
 #include "render.hpp"
 
-//Music
-
-
 //Window & textures initialization 
-renderWindow window("Mazing :)", SCREEN_WIDTH, SCREEN_HEIGHT);
+renderWindow window("Mazing with Miku", SCREEN_WIDTH, SCREEN_HEIGHT);
 SDL_Texture* bg = window.loadTexture("res/bg.png");
 SDL_Texture* menu = window.loadTexture("res/intro.png");
 SDL_Texture* win = window.loadTexture("res/win.png");
