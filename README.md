@@ -14,6 +14,6 @@ CÁCH CHƠI:
   - M: quay lại màn hình bắt đầu
   - ESC: thoát game
 
-Cách chạy bản chơi thử: Mở file .exe tại bin/release
+Cách chạy trò chơi: Mở file .exe tại bin/release
 
 - Tiến độ: Đã xong (?)
