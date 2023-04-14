@@ -8,7 +8,9 @@ Hãy né những khối đỏ và về đích trong thời gian ngắn nhất.
 CÁCH CHƠI:
   - Chuột trái: thay đổi vận tốc của người chơi, đưa người chơi đến vị trí đã nhấn chuột
   - ESC: tạm thời dừng game
-  Khi đã thắng hoặc thua:
+
+Khi đã thắng hoặc thua:
+
   - R: chơi lại màn chơi vừa qua
   - C: tiếp tục màn chơi tiếp theo
   - M: quay lại màn hình bắt đầu
