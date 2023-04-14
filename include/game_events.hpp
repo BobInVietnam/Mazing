@@ -43,9 +43,12 @@ void ProcessGWMenuEvent();
 //Music
 void InitSound() {
     if (bgm == NULL) bgm = Mix_LoadMUS("res/rolling_girl.mp3");
-    if (bgm == NULL) std::cout << "Cannot load BGM" << std::endl;
+    if (deathSFX == NULL) deathSFX = Mix_LoadWAV("res/defeat.mp3");
+    if (winSFX == NULL) winSFX = Mix_LoadWAV("res/win.mp3");
+
+    if (bgm == NULL || deathSFX == NULL || winSFX == NULL) std::cout << "Cannot load BGM" << std::endl;
     if (Mix_PlayingMusic() == 0) Mix_PlayMusic(bgm, -1);
-    Mix_VolumeMusic(48);
+    Mix_VolumeMusic(24);
 }
 
 //Menu
@@ -179,6 +182,7 @@ void CollisionCheck() {
     ||  Bob.getPos().y + lv[ID].StartingSize.y > SCREEN_HEIGHT || Bob.getPos().y < 0) {
         gameLostRunning = true;
         gameplayRunning = false;
+        Mix_PlayChannel(-1, deathSFX, 0);
         DeathCountI++;
         DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
 
@@ -203,6 +207,7 @@ void CheckGameWon() {
         gameplayRunning = false;
         gameWinRunning = true;
         ++ID;
+        Mix_PlayChannel(-1, winSFX, 0);
         DeathCountI = 0;
         DeathCountT.changeText("Death Count: " + std::to_string(DeathCountI));
     }
