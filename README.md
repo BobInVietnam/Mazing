@@ -22,4 +22,8 @@ Cách chạy trò chơi: Mở file .exe tại bin/release
 
 ## Screenshot
 
-!["Nothing"]()
+!["Nothing"](https://raw.githubusercontent.com/BobInVietnam/Mazing/refs/heads/master/screenshots/stage1.png)
+
+!["Nothing 2"](https://raw.githubusercontent.com/BobInVietnam/Mazing/refs/heads/master/screenshots/stage2.png)
+
+!["Nothing 3"](https://raw.githubusercontent.com/BobInVietnam/Mazing/refs/heads/master/screenshots/stage3.png)
