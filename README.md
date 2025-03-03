@@ -19,3 +19,7 @@ Khi đã thắng hoặc thua:
 Cách chạy trò chơi: Mở file .exe tại bin/release
 
 - Tiến độ: Đã xong (?)
+
+## Screenshot
+
+!["Nothing"]()
